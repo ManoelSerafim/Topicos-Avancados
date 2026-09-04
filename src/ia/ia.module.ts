@@ -17,6 +17,5 @@ import { OllamaProvider } from './providers/ollama.provider';
       useClass: OllamaProvider,
     },
   ],
-  exports: [IaService],
 })
 export class IaModule {}

@@ -7,7 +7,7 @@ import { OllamaProvider } from 'src/ia/providers/ollama.provider';
 import { IaModule } from 'src/ia/ia.module';
 
 @Module({
-  imports: [IaModule, HttpModule],
+  imports: [HttpModule],
   controllers: [ChamadosController, ],
   providers: [
     ChamadosService,

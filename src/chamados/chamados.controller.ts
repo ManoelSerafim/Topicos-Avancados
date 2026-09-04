@@ -11,5 +11,4 @@ export class ChamadosController {
   create(@Body() classificarChamadoDto: ClassificarChamadoDto) {
     return this.chamadosService.classificar(classificarChamadoDto.texto);
   }
-
 }
