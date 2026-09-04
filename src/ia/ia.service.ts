@@ -3,6 +3,7 @@ import {
   MODELO_PROVIDER,
 } from './providers/modelo.provider';
 import type {
+  GerarClassificaçãoChamadoOutput,
   GerarRespostaOutput,
   ModeloProvider,
 } from './providers/modelo.provider';
@@ -22,5 +23,14 @@ export class IaService {
     }
 
     return this.modelo.gerar({ mensagem: mensagemNormalizada });
+  }
+  classificar(texto: string): Promise<GerarClassificaçãoChamadoOutput> {
+    const mensagemNormalizada = texto.trim();
+
+    if (!mensagemNormalizada) {
+      throw new BadRequestException('A mensagem não pode conter apenas espaços');
+    }
+
+    return this.modelo.classificar({ texto: mensagemNormalizada });
   }
 }
