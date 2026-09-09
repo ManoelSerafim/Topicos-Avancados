@@ -7,7 +7,7 @@ import { ClassificarChamadoDto } from './dto/classificar-chamado.dto';
 export class ChamadosController {
   constructor(private readonly chamadosService: ChamadosService) {}
 
-  @Post('/classificar')
+  @Post('classificar')
   create(@Body() classificarChamadoDto: ClassificarChamadoDto) {
     return this.chamadosService.classificar(classificarChamadoDto.texto);
   }
