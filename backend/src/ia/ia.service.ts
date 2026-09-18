@@ -24,4 +24,17 @@ export class IaService {
 
     return this.modelo.gerar({ mensagem: mensagemNormalizada });
   }
+
+  gerarStream(mensagem: string, signal: AbortSignal): AsyncIterable<string> {
+    const mensagemNormalizada = mensagem.trim();
+
+    if (!mensagemNormalizada) {
+      throw new BadRequestException('A mensagem não pode conter apenas espaços');
+    }
+
+    return this.modelo.gerarStream({
+      mensagem: mensagemNormalizada,
+      signal,
+    });
+  }
 }

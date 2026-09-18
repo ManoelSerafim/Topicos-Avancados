@@ -1,1 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+html {
+	background: #e9e4d9;
+}
+
+body {
+	background: radial-gradient(circle at 80% 0%, #f8f3e9 0, #e9e4d9 42rem);
+	color: #292721;
+	font-family: 'DM Sans', sans-serif;
+	margin: 0;
+	min-height: 100vh;
+}
 /* You can add global styles to this file, and also import other style files */

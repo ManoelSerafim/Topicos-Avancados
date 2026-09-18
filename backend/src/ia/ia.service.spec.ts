@@ -12,6 +12,8 @@ describe('IaService', () => {
   beforeEach(async () => {
     provider = {
       gerar: jest.fn(),
+      gerarStream: jest.fn(),
+      classificar: jest.fn(),
     };
 
     const moduleRef = await Test.createTestingModule({
@@ -43,5 +45,23 @@ describe('IaService', () => {
     });
 
     expect(provider.gerar).toHaveBeenCalledWith({ mensagem: 'Olá' });
+  });
+
+  it('normaliza a mensagem antes de iniciar o streaming', () => {
+    const signal = new AbortController().signal;
+    const stream = service.gerarStream('  Olá  ', signal);
+
+    expect(stream).toBe(provider.gerarStream.mock.results[0]?.value);
+    expect(provider.gerarStream).toHaveBeenCalledWith({
+      mensagem: 'Olá',
+      signal,
+    });
+  });
+
+  it('rejeita mensagem vazia no streaming', () => {
+    expect(() => service.gerarStream('   ', new AbortController().signal)).toThrow(
+      'A mensagem não pode conter apenas espaços',
+    );
+    expect(provider.gerarStream).not.toHaveBeenCalled();
   });
 });
