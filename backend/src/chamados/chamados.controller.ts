@@ -1,14 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ChamadosService } from './chamados.service';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ClassificarChamadoDto } from './dto/classificar-chamado.dto';
-
+import { ChamadosService } from './chamados.service';
 
 @Controller('chamados')
 export class ChamadosController {
-  constructor(private readonly chamadosService: ChamadosService) {}
+  constructor(private readonly chamados: ChamadosService) {}
 
   @Post('classificar')
-  create(@Body() classificarChamadoDto: ClassificarChamadoDto) {
-    return this.chamadosService.classificar(classificarChamadoDto.texto);
+  classificar(@Body() dto: ClassificarChamadoDto) {
+    return this.chamados.classificar(dto.texto);
   }
 }

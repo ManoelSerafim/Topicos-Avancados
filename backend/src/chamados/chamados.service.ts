@@ -1,20 +1,47 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import type { GerarClassificaçãoChamadoOutput } from 'src/ia/providers/modelo.provider';
-import { MODELO_PROVIDER } from 'src/ia/providers/modelo.provider';
-import type { ModeloProvider } from 'src/ia/providers/modelo.provider';
+import {
+  BadGatewayException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
+import {
+  MODELO_PROVIDER,
+  type ModeloProvider,
+} from '../ia/providers/modelo.provider';
+import {
+  isChamadoCategoria,
+  type ChamadoCategoria,
+} from './chamado-categoria';
+import { buildClassificacaoPrompt } from './classificacao.prompt';
+
+export interface ClassificacaoResultado {
+  texto: string;
+  categoria: ChamadoCategoria;
+  modelo: string;
+}
+
 @Injectable()
 export class ChamadosService {
   constructor(
     @Inject(MODELO_PROVIDER)
     private readonly modelo: ModeloProvider,
   ) {}
-  classificar(texto: string): Promise<GerarClassificaçãoChamadoOutput> {
-    const mensagemNormalizada = texto.trim();
 
-    if (!mensagemNormalizada) {
-      throw new BadRequestException('A mensagem não pode conter apenas espaços');
+  async classificar(textoOriginal: string): Promise<ClassificacaoResultado> {
+    const texto = textoOriginal.trim();
+    const prompt = buildClassificacaoPrompt(texto);
+    const resultado = await this.modelo.gerar({ mensagem: prompt });
+    const categoria = resultado.resposta.trim().toUpperCase();
+
+    if (!isChamadoCategoria(categoria)) {
+      throw new BadGatewayException(
+        'O modelo retornou uma categoria inválida',
+      );
     }
 
-    return this.modelo.classificar({ texto: mensagemNormalizada });
+    return {
+      texto,
+      categoria,
+      modelo: resultado.modelo,
+    };
   }
 }
