@@ -32,7 +32,7 @@ describe('ChamadosService', () => {
 
     await expect(
       service.classificar('Minha senha foi bloqueada.'),
-    ).resolves.toMatchObject({ categoria: 'ACESSO' });
+    ).resolves.toMatchObject({ categoria: 'ACESSO', prioridade: 'MEDIA' });
   });
 
   it('rejeita categoria inventada', async () => {

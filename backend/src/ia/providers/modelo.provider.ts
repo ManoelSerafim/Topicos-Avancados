@@ -21,6 +21,8 @@ export interface GerarClassificaçãoChamadoInput {
 export interface GerarClassificaçãoChamadoOutput {
   texto: string;
   categoria: string;
+  prioridade: string;
+  justificativa: string;
   modelo?: string;
 }
 
@@ -37,9 +39,9 @@ export interface ConversarInput {
 export interface ModeloProvider {
   gerar(input: GerarRespostaInput): Promise<GerarRespostaOutput>;
   gerarStream(input: GerarStreamInput): AsyncIterable<string>;
-  classificar(
-    input: GerarClassificaçãoChamadoInput,
-  ): Promise<GerarClassificaçãoChamadoOutput>;
+  // classificar(
+  //   input: GerarClassificaçãoChamadoInput,
+  // ): Promise<GerarClassificaçãoChamadoOutput>;
   conversar(input: ConversarInput): Promise<GerarRespostaOutput>;
 }
 
