@@ -14,6 +14,7 @@ import {
 import { buildClassificacaoPrompt } from './classificacao.prompt';
 import { ChamadoPrioridade, isChamadoPrioridade } from './chamado-prioridade';
 import { buildPrioridadePrompt } from './prioridade.prompt';
+import { buildJustificativaPrioridadePrompt } from './justificativa.prompt';
 
 export interface ClassificacaoResultado {
   texto: string;
@@ -38,6 +39,9 @@ export class ChamadosService {
     const resultado = await this.modelo.gerar({ mensagem: prompt });
     const categoria = resultado.resposta.trim().toUpperCase();
     const prioridade = resultadoPrioridade.resposta.trim().toUpperCase() as ChamadoPrioridade;
+    const promptjustificativa = buildJustificativaPrioridadePrompt(texto, prioridade);
+    const resultadoJustificativa = await this.modelo.gerar({ mensagem: promptjustificativa });
+    const justificativa = resultadoJustificativa.resposta.trim();
 
     if (!isChamadoCategoria(categoria)) {
       throw new BadGatewayException(
@@ -49,11 +53,16 @@ export class ChamadosService {
         'O modelo retornou uma prioridade inválida',
       );
     }
+    if (!justificativa || justificativa.length === 0) {
+      throw new BadGatewayException(
+        'O modelo não retornou uma justificativa válida',
+      );
+    }
     return {
       texto,
       categoria,
       prioridade: prioridade,
-      justificativa: 'Justificativa não fornecida pelo modelo',
+      justificativa: justificativa,
       modelo: resultado.modelo,
     };
   }
