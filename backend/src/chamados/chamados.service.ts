@@ -1,8 +1,4 @@
-import {
-  BadGatewayException,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { BadGatewayException, Inject, Injectable } from '@nestjs/common';
 import {
   MODELO_PROVIDER,
   type ModeloProvider,
@@ -10,11 +6,14 @@ import {
 import {
   isChamadoCategoria,
   type ChamadoCategoria,
-} from './chamado-categoria';
-import { buildClassificacaoPrompt } from './classificacao.prompt';
-import { ChamadoPrioridade, isChamadoPrioridade } from './chamado-prioridade';
-import { buildPrioridadePrompt } from './prioridade.prompt';
-import { buildJustificativaPrioridadePrompt } from './justificativa.prompt';
+} from './domain/chamado-categoria';
+import { buildClassificacaoPrompt } from './prompts/classificacao.prompt';
+import {
+  ChamadoPrioridade,
+  isChamadoPrioridade,
+} from './domain/chamado-prioridade';
+import { buildPrioridadePrompt } from './prompts/prioridade.prompt';
+import { buildJustificativaPrioridadePrompt } from './prompts/justificativa.prompt';
 
 export interface ClassificacaoResultado {
   texto: string;
@@ -35,18 +34,25 @@ export class ChamadosService {
     const texto = textoOriginal.trim();
     const prompt = buildClassificacaoPrompt(texto);
     const promptPrioridade = buildPrioridadePrompt(texto);
-    const resultadoPrioridade = await this.modelo.gerar({ mensagem: promptPrioridade });
+    const resultadoPrioridade = await this.modelo.gerar({
+      mensagem: promptPrioridade,
+    });
     const resultado = await this.modelo.gerar({ mensagem: prompt });
     const categoria = resultado.resposta.trim().toUpperCase();
-    const prioridade = resultadoPrioridade.resposta.trim().toUpperCase() as ChamadoPrioridade;
-    const promptjustificativa = buildJustificativaPrioridadePrompt(texto, prioridade);
-    const resultadoJustificativa = await this.modelo.gerar({ mensagem: promptjustificativa });
+    const prioridade = resultadoPrioridade.resposta
+      .trim()
+      .toUpperCase() as ChamadoPrioridade;
+    const promptjustificativa = buildJustificativaPrioridadePrompt(
+      texto,
+      prioridade,
+    );
+    const resultadoJustificativa = await this.modelo.gerar({
+      mensagem: promptjustificativa,
+    });
     const justificativa = resultadoJustificativa.resposta.trim();
 
     if (!isChamadoCategoria(categoria)) {
-      throw new BadGatewayException(
-        'O modelo retornou uma categoria inválida',
-      );
+      throw new BadGatewayException('O modelo retornou uma categoria inválida');
     }
     if (!isChamadoPrioridade(prioridade)) {
       throw new BadGatewayException(

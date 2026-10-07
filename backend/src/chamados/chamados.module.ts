@@ -5,9 +5,9 @@ import { IaModule } from 'src/ia/ia.module';
 import { AvaliadorClassificacaoService } from './avaliacao/avaliador-classificacao.service';
 
 @Module({
-  imports: [IaModule,],
-  controllers: [ChamadosController,],
-  providers: [ChamadosService, AvaliadorClassificacaoService,],
-  exports: [AvaliadorClassificacaoService,],
+  imports: [IaModule],
+  controllers: [ChamadosController],
+  providers: [ChamadosService, AvaliadorClassificacaoService],
+  exports: [AvaliadorClassificacaoService],
 })
 export class ChamadosModule {}

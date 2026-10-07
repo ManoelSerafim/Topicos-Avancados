@@ -1,4 +1,4 @@
-import type { ChamadoCategoria } from '../chamado-categoria';
+import type { ChamadoCategoria } from '../domain/chamado-categoria';
 
 export interface CasoAvaliacao {
   id: string;

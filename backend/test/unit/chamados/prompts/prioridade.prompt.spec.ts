@@ -1,4 +1,4 @@
-import { buildPrioridadePrompt } from './prioridade.prompt';
+import { buildPrioridadePrompt } from '../../../../src/chamados/prompts/prioridade.prompt';
 
 describe('buildPrioridadePrompt', () => {
   it('inclui o chamado entre delimitadores', () => {
@@ -26,6 +26,8 @@ describe('buildPrioridadePrompt', () => {
     expect(prompt).toContain(
       'Se o impacto ou o alcance não estiverem claros, responda REVISAO_HUMANA.',
     );
-    expect(prompt).toContain('Use somente as informações presentes no chamado.');
+    expect(prompt).toContain(
+      'Use somente as informações presentes no chamado.',
+    );
   });
 });

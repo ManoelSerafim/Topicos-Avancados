@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { EnviarMensagemDto } from './dto/enviar-mensagem.dto';
 import { ConversasRepository } from './conversas.repository';
 import { ConversasService } from './conversas.service';

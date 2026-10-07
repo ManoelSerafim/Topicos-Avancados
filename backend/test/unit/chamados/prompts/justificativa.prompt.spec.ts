@@ -1,4 +1,4 @@
-import { buildJustificativaPrioridadePrompt } from './justificativa.prompt';
+import { buildJustificativaPrioridadePrompt } from '../../../../src/chamados/prompts/justificativa.prompt';
 
 describe('buildJustificativaPrioridadePrompt', () => {
   it('inclui a prioridade definida e o chamado entre delimitadores', () => {

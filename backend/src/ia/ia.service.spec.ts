@@ -1,9 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { IaService } from './ia.service';
-import {
-  MODELO_PROVIDER,
-  ModeloProvider,
-} from './providers/modelo.provider';
+import { MODELO_PROVIDER, ModeloProvider } from './providers/modelo.provider';
 
 describe('IaService', () => {
   let service: IaService;
@@ -59,9 +56,9 @@ describe('IaService', () => {
   });
 
   it('rejeita mensagem vazia no streaming', () => {
-    expect(() => service.gerarStream('   ', new AbortController().signal)).toThrow(
-      'A mensagem não pode conter apenas espaços',
-    );
+    expect(() =>
+      service.gerarStream('   ', new AbortController().signal),
+    ).toThrow('A mensagem não pode conter apenas espaços');
     expect(provider.gerarStream).not.toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-import { ChamadoPrioridade } from './chamado-prioridade';
+import { ChamadoPrioridade } from '../domain/chamado-prioridade';
 
 export function buildJustificativaPrioridadePrompt(
   texto: string,

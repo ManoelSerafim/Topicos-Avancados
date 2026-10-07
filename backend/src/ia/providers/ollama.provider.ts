@@ -124,9 +124,7 @@ export class OllamaProvider implements ModeloProvider {
         }
 
         if (error.code === 'ECONNREFUSED') {
-          throw new ServiceUnavailableException(
-            'Servidor de IA indisponível',
-          );
+          throw new ServiceUnavailableException('Servidor de IA indisponível');
         }
       }
 
@@ -215,7 +213,7 @@ export class OllamaProvider implements ModeloProvider {
   //     return {
   //       texto: input.texto,
   //       categoria: content,
-        
+
   //       modelo: response.data.model,
   //     };
   //   } catch (error: unknown) {
@@ -241,7 +239,7 @@ export class OllamaProvider implements ModeloProvider {
   //   }
   // }
 
-    async conversar(input: ConversarInput): Promise<GerarRespostaOutput> {
+  async conversar(input: ConversarInput): Promise<GerarRespostaOutput> {
     const baseUrl = this.config.getOrThrow<string>('OLLAMA_BASE_URL');
     const model = this.config.getOrThrow<string>('OLLAMA_MODEL');
     const timeout = Number(
@@ -270,5 +268,4 @@ export class OllamaProvider implements ModeloProvider {
       tokensSaida: response.data.eval_count,
     };
   }
-
 }

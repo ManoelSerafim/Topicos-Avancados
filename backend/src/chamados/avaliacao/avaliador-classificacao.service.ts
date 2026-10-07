@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ChamadoCategoria } from '../chamado-categoria';
+import { ChamadoCategoria } from '../domain/chamado-categoria';
 import { ChamadosService } from '../chamados.service';
 import { CASOS_AVALIACAO, type CasoAvaliacao } from './casos-avaliacao';
 

@@ -45,5 +45,4 @@ export interface ModeloProvider {
   conversar(input: ConversarInput): Promise<GerarRespostaOutput>;
 }
 
-
 export const MODELO_PROVIDER = Symbol('MODELO_PROVIDER');

@@ -1,4 +1,4 @@
-import { buildClassificacaoPrompt } from './classificacao.prompt';
+import { buildClassificacaoPrompt } from '../../../../src/chamados/prompts/classificacao.prompt';
 
 describe('buildClassificacaoPrompt', () => {
   it('inclui o chamado entre delimitadores', () => {
