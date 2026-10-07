@@ -22,63 +22,134 @@ describe('ChamadosService', () => {
     service = moduleRef.get(ChamadosService);
   });
 
-  it('aceita uma categoria permitida', async () => {
-    gerar
-      .mockResolvedValueOnce({
-        resposta: ' MEDIA ',
-        modelo: 'modelo-controlado',
-      }) // prioridade
-      .mockResolvedValueOnce({
+  describe('classificar', () => {
+    it('aceita uma categoria permitida', async () => {
+      gerar.mockResolvedValue({
         resposta: ' acesso ',
         modelo: 'modelo-controlado',
-      }) // categoria
-      .mockResolvedValueOnce({
-        resposta: 'Justificativa válida',
-        modelo: 'modelo-controlado',
-      }); // justificativa
+      });
 
-    await expect(
-      service.classificar('Minha senha foi bloqueada.'),
-    ).resolves.toMatchObject({ categoria: 'ACESSO', prioridade: 'MEDIA' });
-  });
+      await expect(
+        service.classificar('Minha senha foi bloqueada.'),
+      ).resolves.toMatchObject({ categoria: 'ACESSO' });
+    });
 
-  it('rejeita categoria inventada', async () => {
-    gerar
-      .mockResolvedValueOnce({
-        resposta: ' MEDIA ',
-        modelo: 'modelo-controlado',
-      })
-      .mockResolvedValueOnce({
+    it('rejeita categoria inventada', async () => {
+      gerar.mockResolvedValue({
         resposta: 'SUPORTE_TECNICO',
         modelo: 'modelo-controlado',
-      })
-      .mockResolvedValueOnce({
-        resposta: 'Justificativa',
-        modelo: 'modelo-controlado',
       });
 
-    await expect(
-      service.classificar('O computador está lento.'),
-    ).rejects.toThrow('categoria inválida');
-  });
+      await expect(
+        service.classificar('O computador está lento.'),
+      ).rejects.toThrow('categoria inválida');
+    });
 
-  it('rejeita explicação junto da categoria', async () => {
-    gerar
-      .mockResolvedValueOnce({
-        resposta: ' MEDIA ',
-        modelo: 'modelo-controlado',
-      })
-      .mockResolvedValueOnce({
+    it('rejeita explicação junto da categoria', async () => {
+      gerar.mockResolvedValue({
         resposta: 'ACESSO porque a senha expirou',
         modelo: 'modelo-controlado',
-      })
-      .mockResolvedValueOnce({
-        resposta: 'Justificativa',
+      });
+
+      await expect(service.classificar('Minha senha expirou.')).rejects.toThrow(
+        'categoria inválida',
+      );
+    });
+  });
+
+  describe('priorizar', () => {
+    it('retorna prioridade ALTA com justificativa', async () => {
+      gerar.mockResolvedValue({
+        resposta: JSON.stringify({
+          prioridade: 'ALTA',
+          justificativa:
+            'Usuário não consegue acessar sistema essencial para trabalho.',
+        }),
         modelo: 'modelo-controlado',
       });
 
-    await expect(service.classificar('Minha senha expirou.')).rejects.toThrow(
-      'categoria inválida',
-    );
+      const resultado = await service.priorizar(
+        'Não consigo acessar o sistema de folha de pagamento para processar salários.',
+      );
+
+      expect(resultado.prioridade).toBe('ALTA');
+      expect(resultado.justificativa).toContain('não consegue acessar');
+      expect(resultado.revisaoHumana).toBe(false);
+    });
+
+    it('retorna prioridade CRITICA com justificativa', async () => {
+      gerar.mockResolvedValue({
+        resposta: JSON.stringify({
+          prioridade: 'CRITICA',
+          justificativa:
+            'Sistema indisponível para todos os usuários da unidade.',
+        }),
+        modelo: 'modelo-controlado',
+      });
+
+      const resultado = await service.priorizar(
+        'Sistema totalmente fora do ar para toda a empresa desde às 8h.',
+      );
+
+      expect(resultado.prioridade).toBe('CRITICA');
+      expect(resultado.revisaoHumana).toBe(false);
+    });
+
+    it('retorna REVISAO_HUMANA quando impacto não está claro', async () => {
+      gerar.mockResolvedValue({
+        resposta: JSON.stringify({
+          prioridade: 'REVISAO_HUMANA',
+          justificativa:
+            'O chamado não informa o alcance ou impacto do problema.',
+        }),
+        modelo: 'modelo-controlado',
+      });
+
+      const resultado = await service.priorizar(
+        'Preciso de ajuda com uma coisa importante.',
+      );
+
+      expect(resultado.prioridade).toBe('REVISAO_HUMANA');
+      expect(resultado.revisaoHumana).toBe(true);
+    });
+
+    it('rejeita prioridade inválida do modelo', async () => {
+      gerar.mockResolvedValue({
+        resposta: JSON.stringify({
+          prioridade: 'URGENTE',
+          justificativa: 'Muito urgente',
+        }),
+        modelo: 'modelo-controlado',
+      });
+
+      await expect(service.priorizar('Sistema fora do ar.')).rejects.toThrow(
+        'prioridade inválida',
+      );
+    });
+
+    it('rejeita resposta sem justificativa', async () => {
+      gerar.mockResolvedValue({
+        resposta: JSON.stringify({
+          prioridade: 'ALTA',
+          justificativa: '',
+        }),
+        modelo: 'modelo-controlado',
+      });
+
+      await expect(
+        service.priorizar('Não consigo acessar o sistema.'),
+      ).rejects.toThrow('justificativa válida');
+    });
+
+    it('rejeita resposta que não é JSON válido', async () => {
+      gerar.mockResolvedValue({
+        resposta: 'ALTA - Usuário impedido',
+        modelo: 'modelo-controlado',
+      });
+
+      await expect(
+        service.priorizar('Não consigo acessar o sistema.'),
+      ).rejects.toThrow('JSON válido');
+    });
   });
 });

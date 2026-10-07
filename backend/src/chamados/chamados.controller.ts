@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ClassificarChamadoDto } from './dto/classificar-chamado.dto';
+import { PriorizarChamadoDto } from './dto/priorizar-chamado.dto';
 import { ChamadosService } from './chamados.service';
 
 @Controller('chamados')
@@ -9,5 +10,10 @@ export class ChamadosController {
   @Post('classificar')
   classificar(@Body() dto: ClassificarChamadoDto) {
     return this.chamados.classificar(dto.texto);
+  }
+
+  @Post('priorizar')
+  priorizar(@Body() dto: PriorizarChamadoDto) {
+    return this.chamados.priorizar(dto.texto);
   }
 }
