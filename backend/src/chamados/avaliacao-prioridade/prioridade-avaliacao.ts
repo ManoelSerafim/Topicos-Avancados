@@ -11,9 +11,9 @@ export interface CasoAvaliacaoPrioridade {
 export const CASOS_AVALIACAO_PRIORIDADE: CasoAvaliacaoPrioridade[] = [
   {
     id: 'duvida-sem-bloqueio-01',
-    texto: 'Tenho uma duvida sobre como consultar meu historico academico.',
+    texto: 'Tenho uma dúvida sobre como consultar meu historico academico.',
     esperado: 'BAIXA',
-    justificativaDeveConter: ['duvida', 'sem bloqueio'],
+    justificativaDeveConter: ['dúvida', 'sem bloqueio'],
     tipo: 'normal',
   },
   {
@@ -36,7 +36,7 @@ export const CASOS_AVALIACAO_PRIORIDADE: CasoAvaliacaoPrioridade[] = [
     id: 'impacto-ausente-01',
     texto: 'O sistema apresentou um problema e preciso de ajuda.',
     esperado: 'BAIXA',
-    justificativaDeveConter: ['impacto', 'nao informado'],
+    justificativaDeveConter: ['impacto', 'não há informações'],
     tipo: 'ausencia',
   },
   {

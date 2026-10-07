@@ -183,6 +183,9 @@ npm run test:e2e
 
 # Avaliação de classificação (requer Ollama rodando)
 npm run avaliar:chamados
+
+# Avaliação de pioridade (requer Ollama rodando)
+npm run avaliar:prioridade
 ```
 
 ## Regras de Negócio - Priorização

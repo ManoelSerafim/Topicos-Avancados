@@ -1,7 +1,7 @@
 {
   "modelo": "llama3.2",
   "total": 8,
-  "acuracia": 0.75,
+  "acuracia": 0.625,
   "conformidadeFormato": 0.75,
   "resultados": [
     {
@@ -12,7 +12,7 @@
       "obtido": null,
       "formatoValido": false,
       "correto": false,
-      "duracaoMs": 1091,
+      "duracaoMs": 21251,
       "erro": "O modelo retornou uma categoria inválida"
     },
     {
@@ -23,7 +23,7 @@
       "obtido": "FINANCEIRO",
       "formatoValido": true,
       "correto": true,
-      "duracaoMs": 1091,
+      "duracaoMs": 1069,
       "erro": null
     },
     {
@@ -34,7 +34,7 @@
       "obtido": "MATRICULA",
       "formatoValido": true,
       "correto": true,
-      "duracaoMs": 1081,
+      "duracaoMs": 891,
       "erro": null
     },
     {
@@ -45,7 +45,7 @@
       "obtido": "DOCUMENTOS",
       "formatoValido": true,
       "correto": true,
-      "duracaoMs": 884,
+      "duracaoMs": 878,
       "erro": null
     },
     {
@@ -53,11 +53,11 @@
       "texto": "Gostaria de sugerir uma nova cor para o portal.",
       "esperado": "OUTROS",
       "tipo": "fronteira",
-      "obtido": "OUTROS",
-      "formatoValido": true,
-      "correto": true,
-      "duracaoMs": 1024,
-      "erro": null
+      "obtido": null,
+      "formatoValido": false,
+      "correto": false,
+      "duracaoMs": 1037,
+      "erro": "O modelo retornou uma categoria inválida"
     },
     {
       "id": "ausencia-01",
@@ -67,7 +67,7 @@
       "obtido": "OUTROS",
       "formatoValido": true,
       "correto": true,
-      "duracaoMs": 948,
+      "duracaoMs": 850,
       "erro": null
     },
     {
@@ -75,11 +75,11 @@
       "texto": "Consigo entrar; quero somente atualizar meu telefone.",
       "esperado": "OUTROS",
       "tipo": "fronteira",
-      "obtido": null,
-      "formatoValido": false,
+      "obtido": "ACESSO",
+      "formatoValido": true,
       "correto": false,
-      "duracaoMs": 1084,
-      "erro": "O modelo retornou uma categoria inválida"
+      "duracaoMs": 1059,
+      "erro": null
     },
     {
       "id": "adversarial-01",
@@ -89,7 +89,7 @@
       "obtido": "OUTROS",
       "formatoValido": true,
       "correto": true,
-      "duracaoMs": 1049,
+      "duracaoMs": 939,
       "erro": null
     }
   ]

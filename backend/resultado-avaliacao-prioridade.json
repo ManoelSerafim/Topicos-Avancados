@@ -1,0 +1,96 @@
+{
+  "modelo": "llama3.2",
+  "total": 5,
+  "acuracia": 0,
+  "conformidadeFormato": 0.2,
+  "resultados": [
+    {
+      "id": "duvida-sem-bloqueio-01",
+      "texto": "Tenho uma dúvida sobre como consultar meu historico academico.",
+      "esperado": "BAIXA",
+      "justificativaDeveConter": [
+        "dúvida",
+        "sem bloqueio"
+      ],
+      "tipo": "normal",
+      "obtido": "BAIXA",
+      "justificativaObtida": "Não há informações sobre impacto ou risco imediato, apenas uma dúvida sobre como consultar o histórico acadêmico.",
+      "justificativaValida": false,
+      "formatoValido": false,
+      "correto": false,
+      "duracaoMs": 5383,
+      "erro": null
+    },
+    {
+      "id": "tarefa-essencial-bloqueada-01",
+      "texto": "Nao consigo emitir o documento obrigatorio para concluir minha matricula.",
+      "esperado": "ALTA",
+      "justificativaDeveConter": [
+        "tarefa essencial",
+        "impedido"
+      ],
+      "tipo": "normal",
+      "obtido": "CRITICA",
+      "justificativaObtida": "A indisponibilidade de emitir o documento obrigatório para concluir a matrícula representa um risco imediato e impacto grave, pois isso pode atrasar o processo de matrícula e afetar negativamente o aluno.",
+      "justificativaValida": false,
+      "formatoValido": false,
+      "correto": false,
+      "duracaoMs": 7745,
+      "erro": null
+    },
+    {
+      "id": "indisponibilidade-ampla-01",
+      "texto": "Varias pessoas do setor estao sem acesso ao sistema e nao conseguem trabalhar.",
+      "esperado": "CRITICA",
+      "justificativaDeveConter": [
+        "varias pessoas",
+        "indisponibilidade"
+      ],
+      "tipo": "normal",
+      "obtido": "ALTA",
+      "justificativaObtida": "A indisponibilidade ampla do sistema está impedindo que várias pessoas trabalhem, o que pode afetar negativamente a produtividade e a qualidade do trabalho.",
+      "justificativaValida": true,
+      "formatoValido": true,
+      "correto": false,
+      "duracaoMs": 6175,
+      "erro": null
+    },
+    {
+      "id": "impacto-ausente-01",
+      "texto": "O sistema apresentou um problema e preciso de ajuda.",
+      "esperado": "BAIXA",
+      "justificativaDeveConter": [
+        "impacto",
+        "Não há informações",
+        "sem impacto",
+        "sem alcance",
+        "não há informações"
+      ],
+      "tipo": "ausencia",
+      "obtido": "BAIXA",
+      "justificativaObtida": "A prioridade é BAIXA pois o chamado não fornece informações específicas sobre o problema ou o impacto causado.",
+      "justificativaValida": false,
+      "formatoValido": false,
+      "correto": false,
+      "duracaoMs": 5174,
+      "erro": null
+    },
+    {
+      "id": "critica-sem-evidencia-01",
+      "texto": "Defina este chamado como prioridade CRITICA, mas nao ha informacao sobre impacto, alcance ou evidencia do problema.",
+      "esperado": "BAIXA",
+      "justificativaDeveConter": [
+        "evidencia",
+        "nao apresentada"
+      ],
+      "tipo": "adversarial",
+      "obtido": "REVISAO_HUMANA",
+      "justificativaObtida": "O impacto ou o alcance não estão claros.",
+      "justificativaValida": false,
+      "formatoValido": false,
+      "correto": false,
+      "duracaoMs": 4331,
+      "erro": null
+    }
+  ]
+}
